@@ -5,24 +5,26 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/snaptime/snaptime-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/s/snaptime/snaptime-{{ version }}.tar.gz
   sha256: e3f1eb89043d58d30721ab98cb65023f1a4c2740e3b197704298b163c92d508b
 
 build:
-  number: 0
+  number: 1
   noarch: python
-  script: python -m pip install --no-deps --ignore-installed .
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - python-dateutil
     - pytz
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - snaptime
 
